@@ -20,7 +20,7 @@ async fn main() -> anyhow::Result<()> {
         Some(value) => value,
         None => {
             eprintln!("{}", USAGE_STRING);
-            return Ok(());
+            std::process::exit(1);
         }
     };
 
@@ -28,7 +28,7 @@ async fn main() -> anyhow::Result<()> {
         Some(value) => value,
         None => {
             eprintln!("{}", USAGE_STRING);
-            return Ok(());
+            std::process::exit(1);
         }
     };
 
