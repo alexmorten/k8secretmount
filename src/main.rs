@@ -12,12 +12,26 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
 
-const USAGE_STRING: &str = "k8secretmount <secret-name> <mount path> [<namespace>]";
+const USAGE_STRING: &str = "Usage: k8secretmount <secret name> <mount path> [<namespace>]";
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let secret_name = std::env::args().nth(1).expect(USAGE_STRING);
-    let folder_path = std::env::args().nth(2).expect(USAGE_STRING);
+    let secret_name = match std::env::args().nth(1) {
+        Some(value) => value,
+        None => {
+            eprintln!("{}", USAGE_STRING);
+            return Ok(());
+        }
+    };
+
+    let folder_path = match std::env::args().nth(2) {
+        Some(value) => value,
+        None => {
+            eprintln!("{}", USAGE_STRING);
+            return Ok(());
+        }
+    };
+
     let namespace = std::env::args().nth(3).unwrap_or("default".into());
 
     let folder_path = Path::new(&folder_path);
